@@ -1,0 +1,6 @@
+NumerWiersza	DataOperacji	NazwaPodmiotu	OpisOperacji	KwotaOperacji	SaldoOperacji
+1	11.03.2024	X	Zakup towarów	-1000	9000
+2	12.03.2024	Y	Przelew	500	9500
+3	13.03.2024	Z	Zwrot transakcji	100	9600
+4	14.03.2024	A	Wypłata z bankomatu	-200	9400
+5	15.03.2024	B	Zakupy spożywcze	-300	9100
