@@ -1,0 +1,2 @@
+NIP	PelnaNazwa	REGON	KodKraju	Wojewodztwo	Powiat	Gmina	Ulica	NrDomu	NrLokalu	Miejscowosc	KodPocztowy	Poczta
+1234567890	XYZ	123456789	PL	Mazowieckie	Warszawa	Warszawa	Warszawska	1	1	Warszawa	11-111	Warszawa
