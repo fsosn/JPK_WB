@@ -1,7 +1,6 @@
 class Podmiot:
     def __init__(
         self,
-        id_podmiotu,
         nip,
         pelna_nazwa,
         regon,
@@ -16,7 +15,6 @@ class Podmiot:
         kod_pocztowy,
         poczta,
     ):
-        self.id_podmiotu = id_podmiotu
         self.nip = nip
         self.pelna_nazwa = pelna_nazwa
         self.regon = regon
