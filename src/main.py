@@ -4,20 +4,75 @@ from models.naglowek import Naglowek
 from models.salda import Salda
 from models.wyciag_ctrl import WyciagCtrl
 from utils.generator import generate_xml
+import os, sys
+
+
+def get_date_input(prompt):
+    while True:
+        try:
+            date_str = input(prompt)
+            date = datetime.strptime(date_str, "%d.%m.%Y")
+            return date
+        except ValueError:
+            print("Nieprawidłowy format daty. Wprowadź datę w formacie DD.MM.RRRR.")
+
+
+def get_int_input(prompt, choices):
+    while True:
+        try:
+            choice = int(input(prompt))
+            if choice in choices:
+                return choice
+            else:
+                print("Nieprawidłowy wybór. Wybierz jedną z dostępnych opcji.")
+        except ValueError:
+            print("Nieprawidłowe dane. Wprowadź liczbę.")
 
 
 def main():
+    podmiot_path = input("Podaj ścieżkę do pliku z danymi podmiotu: ")
+    if not os.path.exists(podmiot_path):
+        print("Plik podmiotu nie istnieje.")
+        sys.exit(1)
 
-    podmiot = reader.get_podmiot("../data/input/podmiot.txt")
-    numer_rachunku, kod_waluty = reader.get_rachunek_data("../data/input/rachunek.txt")
+    rachunek_path = input("Podaj ścieżkę do pliku z danymi rachunku: ")
+    if not os.path.exists(rachunek_path):
+        print("Plik rachunku nie istnieje.")
+        sys.exit(1)
 
-    since_date = datetime.strptime("01.03.2024", "%d.%m.%Y")
-    to_date = datetime.strptime("31.03.2024", "%d.%m.%Y")
+    operacje_path = input("Podaj ścieżkę do pliku z danymi operacji: ")
+    if not os.path.exists(operacje_path):
+        print("Plik operacji nie istnieje.")
+        sys.exit(1)
+
+    print("Cel złożenia:")
+    print("1 - Złożenie informacji na żądanie organu podatkowego")
+    print("2 - Złożenie informacji na wniosek podatnika")
+    print("3 - Złożenie korekty")
+    print("4 - Złożenie informacji z innych przyczyn")
+    cel_zlozenia = get_int_input("Wybierz cel złożenia (1-4): ", [1, 2, 3, 4])
+
+    since_date = get_date_input("Podaj datę początkową (DD.MM.RRRR): ")
+
+    to_date = get_date_input("Podaj datę końcową (DD.MM.RRRR): ")
+
+    podmiot = reader.get_podmiot(podmiot_path)
+
+    numer_rachunku, kod_waluty = reader.get_rachunek_data(rachunek_path)
+
     wyciag_wiersze = reader.get_wyciag_wiersz_list(
-        "../data/input/operacje.txt", since=since_date, to=to_date
+        operacje_path, since=since_date, to=to_date
     )
+
     naglowek = Naglowek(
-        "JPK_WB", "1", "1", datetime.now(), since_date, to_date, kod_waluty, "1"
+        "JPK_WB",
+        "1",
+        str(cel_zlozenia),
+        datetime.now(),
+        since_date,
+        to_date,
+        kod_waluty,
+        "1435",
     )
 
     suma_obciazen = 0.0
@@ -42,9 +97,15 @@ def main():
         len(wyciag_wiersze), "{:.2f}".format(suma_obciazen), "{:.2f}".format(suma_uznan)
     )
 
+    data_dir = os.path.join(os.getcwd(), "data")
+
     generate_xml(
-        "../data/output/JPK_WB_{}_{}.xml".format(
-            podmiot.nip, datetime.now().strftime("%Y%m%d%H%M")
+        os.path.join(
+            data_dir,
+            "output",
+            "JPK_WB_{}_{}.xml".format(
+                podmiot.nip, datetime.now().strftime("%Y%m%d%H%M")
+            ),
         ),
         podmiot,
         numer_rachunku,
@@ -52,6 +113,17 @@ def main():
         salda,
         wyciag_wiersze,
         wyciag_ctrl,
+    )
+
+    print(
+        "Wygenerowano plik XML:",
+        os.path.join(
+            data_dir,
+            "output",
+            "JPK_WB_{}_{}.xml".format(
+                podmiot.nip, datetime.now().strftime("%Y%m%d%H%M")
+            ),
+        ),
     )
 
 
