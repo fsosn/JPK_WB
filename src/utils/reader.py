@@ -1,9 +1,9 @@
-from src.validators.podmiot_validator import PodmiotValidator
-from src.validators.rachunek_validator import RachunekValidator
-from src.validators.operacje_validator import OperacjeValidator
-from src.models.podmiot import Podmiot
-from src.models.numer_rachunku import NumerRachunku
-from src.models.wyciag_wiersz import WyciagWiersz
+from validators.podmiot_validator import PodmiotValidator
+from validators.rachunek_validator import RachunekValidator
+from validators.operacje_validator import OperacjeValidator
+from models.podmiot import Podmiot
+from models.numer_rachunku import NumerRachunku
+from models.wyciag_wiersz import WyciagWiersz
 import logging
 import sys
 from datetime import datetime
