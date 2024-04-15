@@ -1,5 +1,5 @@
 import re
-import datetime
+from datetime import datetime
 
 
 class OperacjeValidator:
@@ -48,3 +48,22 @@ class OperacjeValidator:
             return False, errors
         else:
             return True, ""
+
+    def validate_kwota_saldo(self, operacje_data):
+        errors = []
+        saldo_poprzedni = None
+        for i, data in enumerate(operacje_data, start=1):
+            kwota_operacji = data["KwotaOperacji"]
+            saldo_operacji = data["SaldoOperacji"]
+
+            if saldo_poprzedni is not None:
+                saldo_po_operacji = saldo_poprzedni + float(kwota_operacji)
+                if round(saldo_po_operacji, 2) != round(float(saldo_operacji), 2):
+                    errors.append(f"Błąd w wierszu {i}: Niezgodność salda po operacji")
+
+            saldo_poprzedni = float(saldo_operacji)
+
+        if errors:
+            return False, errors
+        else:
+            return True, "Wszystkie operacje są poprawne"
