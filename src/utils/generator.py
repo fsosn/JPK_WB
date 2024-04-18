@@ -32,7 +32,7 @@ def generate_xml(
     ).text = naglowek.cel_zlozenia
     ET.SubElement(
         naglowek_element, "{http://crd.gov.pl/wzor/2020/05/08/9393/}DataWytworzeniaJPK"
-    ).text = naglowek.data_wytworzenia_jpk.strftime("%Y-%m-%dT%H:%M:%S")
+    ).text = naglowek.data_wytworzenia_jpk
     ET.SubElement(
         naglowek_element, "{http://crd.gov.pl/wzor/2020/05/08/9393/}DataOd"
     ).text = naglowek.data_od.strftime("%Y-%m-%d")

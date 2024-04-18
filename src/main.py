@@ -4,7 +4,10 @@ from models.naglowek import Naglowek
 from models.salda import Salda
 from models.wyciag_ctrl import WyciagCtrl
 from utils.generator import generate_xml
-import os, sys
+from database.database_manager import DatabaseManager
+import os
+import sys
+from dotenv import load_dotenv
 
 
 def get_date_input(prompt):
@@ -30,6 +33,16 @@ def get_int_input(prompt, choices):
 
 
 def main():
+    load_dotenv()
+
+    db_manager = DatabaseManager(
+        server=os.getenv("DB_SERVER"),
+        database=os.getenv("DB_NAME"),
+        username=os.getenv("DB_USERNAME"),
+        password=os.getenv("DB_PASSWORD"),
+    )
+    db_manager.connect()
+
     podmiot_path = input("Podaj ścieżkę do pliku z danymi podmiotu: ")
     if not os.path.exists(podmiot_path):
         print("Plik podmiotu nie istnieje.")
@@ -58,7 +71,11 @@ def main():
 
     podmiot = reader.get_podmiot(podmiot_path)
 
+    podmiot_id = db_manager.insert_podmiot(podmiot)
+
     numer_rachunku, kod_waluty = reader.get_rachunek_data(rachunek_path)
+
+    db_manager.insert_numer_rachunku(numer_rachunku.numer_rachunku, podmiot_id)
 
     wyciag_wiersze = reader.get_wyciag_wiersz_list(
         operacje_path, since=since_date, to=to_date
@@ -68,7 +85,7 @@ def main():
         "JPK_WB",
         "1",
         str(cel_zlozenia),
-        datetime.now(),
+        datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         since_date,
         to_date,
         kod_waluty,
@@ -93,19 +110,33 @@ def main():
     else:
         salda = Salda(0.00, 0.00)
 
+    naglowek_id = db_manager.insert_naglowek(naglowek, numer_rachunku.numer_rachunku)
+
+    db_manager.insert_salda(salda, naglowek_id)
+
+    db_manager.insert_wyciag_wiersze(wyciag_wiersze, naglowek_id)
+
     wyciag_ctrl = WyciagCtrl(
         len(wyciag_wiersze), "{:.2f}".format(suma_obciazen), "{:.2f}".format(suma_uznan)
     )
 
-    data_dir = os.path.join(os.getcwd(), "data")
+    db_manager.insert_wyciag_ctrl(wyciag_ctrl, naglowek_id)
+
+    db_manager.commit()
+
+    data_dir_output = os.path.join(os.getcwd(), "data/output")
+
+    data_wytworzenia_jpk = datetime.strptime(
+        naglowek.data_wytworzenia_jpk, "%Y-%m-%d %H:%M:%S"
+    )
+    data_wytworzenia_jpk_formatted = data_wytworzenia_jpk.strftime("%Y%m%d%H%M")
+
+    file_name = "JPK_WB_{}_{}.xml".format(podmiot.nip, data_wytworzenia_jpk_formatted)
 
     generate_xml(
         os.path.join(
-            data_dir,
-            "output",
-            "JPK_WB_{}_{}.xml".format(
-                podmiot.nip, datetime.now().strftime("%Y%m%d%H%M")
-            ),
+            data_dir_output,
+            file_name,
         ),
         podmiot,
         numer_rachunku,
@@ -118,11 +149,8 @@ def main():
     print(
         "Wygenerowano plik XML:",
         os.path.join(
-            data_dir,
-            "output",
-            "JPK_WB_{}_{}.xml".format(
-                podmiot.nip, datetime.now().strftime("%Y%m%d%H%M")
-            ),
+            data_dir_output,
+            file_name,
         ),
     )
 

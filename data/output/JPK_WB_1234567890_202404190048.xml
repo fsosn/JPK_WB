@@ -1,0 +1,78 @@
+<?xml version="1.0" ?>
+<tns:JPK xmlns:tns="http://crd.gov.pl/wzor/2020/05/08/9393/" xmlns:etd="http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2020/03/11/eD/DefinicjeTypy/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<tns:Naglowek>
+		<tns:KodFormularza kodSystemowy="JPK_WB" wersjaSchemy="1-0">JPK_WB</tns:KodFormularza>
+		<tns:WariantFormularza>1</tns:WariantFormularza>
+		<tns:CelZlozenia>1</tns:CelZlozenia>
+		<tns:DataWytworzeniaJPK>2024-04-19 00:48:18</tns:DataWytworzeniaJPK>
+		<tns:DataOd>2024-03-01</tns:DataOd>
+		<tns:DataDo>2024-03-31</tns:DataDo>
+		<tns:DomyslnyKodWaluty>PLN</tns:DomyslnyKodWaluty>
+		<tns:KodUrzedu>1435</tns:KodUrzedu>
+	</tns:Naglowek>
+	<tns:Podmiot1>
+		<tns:IdentyfikatorPodmiotu>
+			<tns:NIP>1234567890</tns:NIP>
+			<tns:PelnaNazwa>XYZ</tns:PelnaNazwa>
+			<tns:REGON>123456789</tns:REGON>
+		</tns:IdentyfikatorPodmiotu>
+		<tns:AdresPodmiotu>
+			<tns:Ulica>Warszawska</tns:Ulica>
+			<tns:NrDomu>1</tns:NrDomu>
+			<tns:NrLokalu>1</tns:NrLokalu>
+			<tns:Miejscowosc>Warszawa</tns:Miejscowosc>
+			<tns:KodPocztowy>11-111</tns:KodPocztowy>
+			<tns:Poczta>Warszawa</tns:Poczta>
+		</tns:AdresPodmiotu>
+	</tns:Podmiot1>
+	<tns:NumerRachunku>PL49102028922276300500000000</tns:NumerRachunku>
+	<tns:Salda>
+		<tns:SaldoPoczatkowe>10000.0</tns:SaldoPoczatkowe>
+		<tns:SaldoKoncowe>9100.00</tns:SaldoKoncowe>
+	</tns:Salda>
+	<tns:WyciagWiersz>
+		<tns:NumerWiersza>1</tns:NumerWiersza>
+		<tns:DataOperacji>2024-03-11</tns:DataOperacji>
+		<tns:NazwaPodmiotu>X</tns:NazwaPodmiotu>
+		<tns:OpisOperacji>Zakup towarów</tns:OpisOperacji>
+		<tns:KwotaOperacji>-1000.00</tns:KwotaOperacji>
+		<tns:SaldoOperacji>9000.00</tns:SaldoOperacji>
+	</tns:WyciagWiersz>
+	<tns:WyciagWiersz>
+		<tns:NumerWiersza>2</tns:NumerWiersza>
+		<tns:DataOperacji>2024-03-12</tns:DataOperacji>
+		<tns:NazwaPodmiotu>Y</tns:NazwaPodmiotu>
+		<tns:OpisOperacji>Przelew</tns:OpisOperacji>
+		<tns:KwotaOperacji>500.00</tns:KwotaOperacji>
+		<tns:SaldoOperacji>9500.00</tns:SaldoOperacji>
+	</tns:WyciagWiersz>
+	<tns:WyciagWiersz>
+		<tns:NumerWiersza>3</tns:NumerWiersza>
+		<tns:DataOperacji>2024-03-13</tns:DataOperacji>
+		<tns:NazwaPodmiotu>Z</tns:NazwaPodmiotu>
+		<tns:OpisOperacji>Zwrot transakcji</tns:OpisOperacji>
+		<tns:KwotaOperacji>100.00</tns:KwotaOperacji>
+		<tns:SaldoOperacji>9600.00</tns:SaldoOperacji>
+	</tns:WyciagWiersz>
+	<tns:WyciagWiersz>
+		<tns:NumerWiersza>4</tns:NumerWiersza>
+		<tns:DataOperacji>2024-03-14</tns:DataOperacji>
+		<tns:NazwaPodmiotu>A</tns:NazwaPodmiotu>
+		<tns:OpisOperacji>Wypłata z bankomatu</tns:OpisOperacji>
+		<tns:KwotaOperacji>-200.00</tns:KwotaOperacji>
+		<tns:SaldoOperacji>9400.00</tns:SaldoOperacji>
+	</tns:WyciagWiersz>
+	<tns:WyciagWiersz>
+		<tns:NumerWiersza>5</tns:NumerWiersza>
+		<tns:DataOperacji>2024-03-15</tns:DataOperacji>
+		<tns:NazwaPodmiotu>B</tns:NazwaPodmiotu>
+		<tns:OpisOperacji>Zakupy spożywcze</tns:OpisOperacji>
+		<tns:KwotaOperacji>-300.00</tns:KwotaOperacji>
+		<tns:SaldoOperacji>9100.00</tns:SaldoOperacji>
+	</tns:WyciagWiersz>
+	<tns:WyciagCtrl>
+		<tns:LiczbaWierszy>5</tns:LiczbaWierszy>
+		<tns:SumaObciazen>600.00</tns:SumaObciazen>
+		<tns:SumaUznan>1500.00</tns:SumaUznan>
+	</tns:WyciagCtrl>
+</tns:JPK>

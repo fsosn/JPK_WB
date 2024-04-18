@@ -92,6 +92,7 @@ def get_wyciag_wiersz_list(file_path, since=None, to=None):
     num_row = 0
     for data in operacje_data:
         data_operacji = datetime.strptime(data["DataOperacji"], "%d.%m.%Y")
+
         if since and data_operacji < since:
             continue
         if to and data_operacji > to:
@@ -112,7 +113,7 @@ def get_wyciag_wiersz_list(file_path, since=None, to=None):
         else:
             wyciag_wiersz = WyciagWiersz(
                 numer_wiersza=num_row,
-                data_operacji=data["DataOperacji"],
+                data_operacji=data_operacji.strftime("%Y-%m-%d"),
                 nazwa_podmiotu=data["NazwaPodmiotu"],
                 opis_operacji=data["OpisOperacji"],
                 kwota_operacji=data["KwotaOperacji"],
