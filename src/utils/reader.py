@@ -91,15 +91,6 @@ def get_wyciag_wiersz_list(file_path, since=None, to=None):
     wyciag_wiersze = []
     num_row = 0
     for data in operacje_data:
-        data_operacji = datetime.strptime(data["DataOperacji"], "%d.%m.%Y")
-
-        if since and data_operacji < since:
-            continue
-        if to and data_operacji > to:
-            continue
-
-        num_row += 1
-
         valid, error = operacje_validator.validate(
             data_operacji=data["DataOperacji"],
             nazwa_podmiotu=data["NazwaPodmiotu"],
@@ -111,6 +102,14 @@ def get_wyciag_wiersz_list(file_path, since=None, to=None):
             logger.error(f"Błąd walidacji danych operacji: {error}")
             sys.exit(1)
         else:
+            data_operacji = datetime.strptime(data["DataOperacji"], "%d.%m.%Y")
+
+            if since and data_operacji < since:
+                continue
+            if to and data_operacji > to:
+                continue
+
+            num_row += 1
             wyciag_wiersz = WyciagWiersz(
                 numer_wiersza=num_row,
                 data_operacji=data_operacji.strftime("%Y-%m-%d"),
