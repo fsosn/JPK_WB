@@ -32,5 +32,3 @@ htmlcov/
 dmypy.json
 
 .python-version
-
-requirements.txt
