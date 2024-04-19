@@ -71,9 +71,9 @@ def main():
 
     podmiot = reader.get_podmiot(podmiot_path)
 
-    podmiot_id = db_manager.insert_podmiot(podmiot)
-
     numer_rachunku, kod_waluty = reader.get_rachunek_data(rachunek_path)
+
+    podmiot_id = db_manager.insert_podmiot(podmiot)
 
     db_manager.insert_numer_rachunku(numer_rachunku.numer_rachunku, podmiot_id)
 

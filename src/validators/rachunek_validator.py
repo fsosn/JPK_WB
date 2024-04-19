@@ -17,7 +17,7 @@ class RachunekValidator:
 
         if not kod_waluty:
             errors.append("Kod waluty jest wymagany")
-        elif len(kod_waluty) != 3 and not kod_waluty.isupper():
+        elif len(kod_waluty) != 3 or not kod_waluty.isupper():
             errors.append("Nieprawidłowy format kodu waluty.")
 
         if errors:
